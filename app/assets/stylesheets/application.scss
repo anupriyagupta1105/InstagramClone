@@ -1,0 +1,70 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+$navbar-inverse-bg: #2b95fd;
+$navbar-inverse-link-color: #fff;
+$navbar-height: 60px;
+
+.post-destroy {
+  position: absolute;
+}
+
+.navbar-brand {
+  img {
+    display: inline-block !important;
+    width: 26px;
+    margin-right: 10px;
+  }
+}
+
+.navbar {
+  box-shadow: 0px -2px 13px 0px black;
+}
+
+.post-creator {
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 20px;
+  width: 20px;
+  display: block;
+  border-radius: 20px;
+  background-size: cover;
+  padding-left: 20px;
+  float: left;
+  margin-right: 5px;
+}
+
+.post-sm {
+  p {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+#postPic {
+  background-size: cover !important;
+  background-position: center center;
+  background-color: white !important;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  width: 100%;
+  padding-bottom: 100%;
+  display: block;
+  cursor:pointer;
+}
+
+
+@import "bootstrap-sprockets";
+@import "bootstrap";

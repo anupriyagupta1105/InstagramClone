@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<div style="width:700px;padding:20px;">
+  <section class="module-section" name="Description">
+    <h2>
+		Description
+    </h2>
+
+    <p>
+      Authentication is something that almost every web application has to implement in one way or another. Despite its ubiquity, this feature set is far from a trivial undertaking; it takes a fair bit of work to set up a robust and secure authentication scheme. As developers, we never want to re-invent the wheel, and in the case of authentication, there are numerous existing solutions for every imaginable web framework.
+    </p>
+
+    <p>
+      For Rails, the defacto solution is the <strong><a href="https://github.com/plataformatec/devise">Devise</a></strong> gem. Devise provides a very flexible and modularized authentication solution for Rails; It is highly customizable and feature-rich, but allows you to only use the pieces you really need. It takes care of a lot of the heavy lifting and is pretty easy to work with.
+    </p>
+
+    <p>
+      In this module, we'll cover the basics of Devise and getting it up and running in your projects.
+    </p>
+
+  </section>
+
+  <section class="module-section" name="The Setup">
+    <h2>
+      The Setup
+    </h2>
+
+    <p>
+      As with any Gem, the first thing we have to do is make an entry in our <code>Gemfile</code>:
+    </p>
+
+  <pre><code class="ruby">gem 'devise'</code></pre>
+
+    <p>
+      And follow that up by running <code>bundle install</code> to install the gem.
+    </p>
+
+    <p>
+      Next, we'll use the Rails generator to install Devise, which will create all the required files and default configuration options. Run the following command in your terminal:
+    </p>
+
+    <pre><code class="ruby">rails generate devise:install</code></pre>
+
+    <p>
+      The installer should display some basic configuration recommendations; we'll skip those for now.
+    </p>
+
+    <p>
+      Now we'll use the generator once more (and run the migration devise creates for us) to create our Devise model:
+    </p>
+
+  <pre><code class="ruby">rails generate devise User
+bundle exec rake db:migrate</code></pre>
+
+    <p>
+      This creates a <code>User.rb</code> file for us and is just like any other model, but with some devise methods built in:
+    </p>
+
+  <pre><code class="ruby">class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+end</code></pre>
+
+    <p>
+      Through some Rails magic, we can easily add or remove Devise features from our User model. We'll use the defaults for now.
+    </p>
+
+    <p>
+      Let's get a couple basic pages set up to test our authentication. We'll create a simple Welcome controller with two pages: <code>index</code> and <code>secret</code>. We'll prevent users from visiting the <code>secret</code> page unless they're logged in. We'll use the rails generator to get us started:
+    </p>
+
+  <pre><code class="ruby">rails g controller Welcome index secret</code></pre>
+
+    <p>
+      We'll want our site to point to the Welcome#index function by default:
+    </p>
+
+    <pre><code class="ruby">root "welcome#index"</code></pre>
+
+    <p>
+      This is where devise will redirect us after a successful signup or login. We can configure devise to send us elsewhere, but for now, this will be fine.
+    </p>
+
+    <p>
+      We'll want to add links to our sign in, sign up, and logout features. Let's do that in <code>layouts/application.html.erb</code> so the links will be available on every page. Just above the <code><%= yield %></code> tag, add the following code:
+    </p>
+
+  <pre><code class="html"><%= link_to 'Sign In', new_user_session_path %>
+<%= link_to 'Sign Up', new_user_registration_path %>
+<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></code></pre>
+
+    <p>
+      This would work, but we probably don't want a user to see the 'Sign Out' option when they aren't signed in, nor should they see Sign In/Sign Up options if they're already signed in. We can use one of Devise's helper methods to do this:
+    </p>
+
+  <pre><code class="html"><% if user_signed_in? %>
+  <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %>
+<% else %>
+  <%= link_to 'Sign In', new_user_session_path %>
+  <%= link_to 'Sign Up', new_user_registration_path %>
+<% end %></code></pre>
+
+
+
+  </section>
+
+
+
+</div>
